@@ -26,9 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          # Whether to download Git-LFS files
-          lfs: false
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -56,3 +53,8 @@ jobs:
             cat '../../../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
             pip download --use-feature=2020-resolver -r '../../../requirements.txt'; 
           }
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          # A file, directory or wildcard pattern that describes what to upload
+          path: pips/
