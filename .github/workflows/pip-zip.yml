@@ -36,15 +36,22 @@ jobs:
           python-version: ${{ matrix.version }}
           # The target architecture (x86, x64) of the Python or PyPy interpreter.
           architecture: x64
-      - name: Install pip
+      - name: Install pip and setup folder
         run: |
           python -m pip install --upgrade pip
-          mkdir -p pips/${{ matrix.version }}
-          cd pips/${{ matrix.version }}
+          mkdir -p pips/${{ matrix.os }}/${{ matrix.version }}
+          cd pips/${{ matrix.os }}/${{ matrix.version }}
       - if: matrix.os == 'ubuntu-latest'
         name: Download packages
         run: |
-          if [ -f ../../requirements.txt ]; then 
-            cat ../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
-            pip download --use-feature=2020-resolver -r ../../requirements.txt; 
+          if [ -f ../../../requirements.txt ]; then 
+            cat ../../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
+            pip download --use-feature=2020-resolver -r ../../../requirements.txt; 
           fi
+      - if: matrix.os == 'windows-latest'
+        name: Download packages
+        run: |
+          if ([System.IO.File]::Exists(../../../requirements.txt)) {
+            cat ../../../requirements.txt | %{pip download --use-feature=2020-resolver $_}; 
+            pip download --use-feature=2020-resolver -r ../../../requirements.txt; 
+          }
