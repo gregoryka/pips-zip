@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: PIP zip
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  os_python_matrix:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        version: ["2.7" , "3.6", "3.7", "3.8", "3.9", "3.10"]
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
+          python-version: ${{ matrix.version }}
+          # The target architecture (x86, x64) of the Python or PyPy interpreter.
+          architecture: x64
+      - name: Install pip and setup folder
+        run: |
+          python -m pip install --upgrade pip
+          mkdir -p pips/${{ matrix.os }}/${{ matrix.version }}
+      - if: matrix.os == 'ubuntu-latest'
+        name: Download packages - Linux
+        run: |
+          cd pips/${{ matrix.os }}/${{ matrix.version }}
+          if [ -f ../../../requirements.txt ]; then 
+            cat ../../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
+            pip download --use-feature=2020-resolver -r ../../../requirements.txt; 
+          fi
+      - if: matrix.os == 'windows-latest'
+        name: Download packages - Windows
+        run: |
+          cd pips/${{ matrix.os }}/${{ matrix.version }}
+          if (Test-Path '../../../requirements.txt') {
+            cat '../../../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
+            pip download --use-feature=2020-resolver -r '../../../requirements.txt'; 
+          }
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          # A file, directory or wildcard pattern that describes what to upload
+          path: pips/
