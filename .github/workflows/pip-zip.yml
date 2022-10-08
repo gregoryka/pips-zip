@@ -41,6 +41,9 @@ jobs:
           python -m pip install --upgrade pip
           mkdir -p pips/${{ matrix.version }}
           cd pips/${{ matrix.version }}
+      - if: ${{ matrix.os }} == ubuntu-latest
+        name: Download packages
+        run: |
           if [ -f ../../requirements.txt ]; then 
             cat ../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
             pip download --use-feature=2020-resolver -r ../../requirements.txt; 
