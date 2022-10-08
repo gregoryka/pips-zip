@@ -36,3 +36,12 @@ jobs:
           python-version: ${{ matrix.version }}
           # The target architecture (x86, x64) of the Python or PyPy interpreter.
           architecture: x64
+      - name: Install pip and download packages
+        run: |
+          python -m pip install --upgrade pip
+          mkdir -p pips/${{ matrix.version }}
+          cd pips/${{ matrix.version }}
+          if [ -f ../../requirements.txt ]; then 
+            cat ../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
+            pip download --use-feature=2020-resolver -r ../../requirements.txt; 
+          fi
