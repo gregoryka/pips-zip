@@ -51,7 +51,7 @@ jobs:
       - if: matrix.os == 'windows-latest'
         name: Download packages
         run: |
-          if ([System.IO.File]::Exists(../../../requirements.txt)) {
-            cat ../../../requirements.txt | %{pip download --use-feature=2020-resolver $_}; 
-            pip download --use-feature=2020-resolver -r ../../../requirements.txt; 
+          if ([System.IO.File]::Exists('../../../requirements.txt')) {
+            cat '../../../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
+            pip download --use-feature=2020-resolver -r '../../../requirements.txt'; 
           }
