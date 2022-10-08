@@ -36,22 +36,22 @@ jobs:
       - name: Install pip and setup folder
         run: |
           python -m pip install --upgrade pip
-          mkdir -p pips/${{ matrix.os }}/${{ matrix.version }}
+          mkdir -p pips
       - if: matrix.os == 'ubuntu-latest'
         name: Download packages - Linux
         run: |
-          cd pips/${{ matrix.os }}/${{ matrix.version }}
-          if [ -f ../../../requirements.txt ]; then 
-            cat ../../../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
-            pip download --use-feature=2020-resolver -r ../../../requirements.txt; 
+          cd pips
+          if [ -f ../requirements.txt ]; then 
+            cat ../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
+            pip download --use-feature=2020-resolver -r ../requirements.txt; 
           fi
       - if: matrix.os == 'windows-latest'
         name: Download packages - Windows
         run: |
-          cd pips/${{ matrix.os }}/${{ matrix.version }}
-          if (Test-Path '../../../requirements.txt') {
-            cat '../../../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
-            pip download --use-feature=2020-resolver -r '../../../requirements.txt'; 
+          cd pips
+          if (Test-Path '../requirements.txt') {
+            cat '../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
+            pip download --use-feature=2020-resolver -r '../requirements.txt'; 
           }
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
