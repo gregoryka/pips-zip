@@ -43,7 +43,7 @@ jobs:
         run: |
           cd pips
           if [ -f ../requirements.txt ]; then 
-            cat ../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver ; 
+            cat ../requirements.txt | xargs -n1 pip download --use-feature=2020-resolver '{}'; 
             pip download --use-feature=2020-resolver -r ../requirements.txt; 
           fi
       - if: matrix.os == 'windows-latest'
@@ -51,7 +51,7 @@ jobs:
         run: |
           cd pips
           if (Test-Path '../requirements.txt') {
-            cat '../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
+            cat '../requirements.txt' | %{pip download --use-feature=2020-resolver '$_'}; 
             pip download --use-feature=2020-resolver -r '../requirements.txt'; 
           }
       - name: Upload a Build Artifact
