@@ -8,6 +8,5 @@ pipenv
 poetry
 numpy
 scipy
-ltfatpy
 sympy
 rich ; python_version >= "3.6"
