@@ -35,15 +35,15 @@ jobs:
           python-version: ${{ matrix.version }}
           # The target architecture (x86, x64) of the Python or PyPy interpreter.
           architecture: x64
+      - name: Setup pip on python 2.7
+        if: matrix.version == 2.7
+        run: |
+          pip --no-python-version-warning config set global.no-python-version-warning true
+          pip config set global.use-feature 2020-resolver
       - name: Install pip and setup folder
         run: |
           python -m pip install --upgrade pip setuptools wheel setuptools-scm
           mkdir -p pips
-      - name: Setup pip on python 2.7
-        if: matrix.version == 2.7
-        run: |
-          pip config set global.use-feature 2020-resolver
-          pip config set global.no-python-version-warning true
       - if: matrix.os == 'ubuntu-latest'
         name: Download packages - Linux
         run: |
