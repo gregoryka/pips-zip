@@ -1,0 +1,11 @@
+pip
+setuptools
+wheel
+pipx
+virtualenv
+pipenv
+poetry
+numpy
+scipy
+sympy
+rich

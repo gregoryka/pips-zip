@@ -6,21 +6,22 @@ name: PIP zip
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  os_python_matrix:
+  DownloadPips:
+    name: Download Pips for Python ${{ matrix.version }} on ${{ matrix.os }}
     strategy:
       # max-parallel: 1
       matrix:
         os: [ubuntu-latest, windows-latest]
-        version: ["2.7" , "3.6", "3.7", "3.8", "3.9", "3.10"]
+        version: ["2.7", "3.6", "3.7", "3.8", "3.9", "3.10"]
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -38,21 +39,26 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel setuptools-scm
           mkdir -p pips
+      - name: Setup pip on python 2.7
+        if: matrix.version == 2.7
+        run: |
+          pip config set global.use-feature=2020-resolver
+          pip config set global.no-python-version-warning=true
       - if: matrix.os == 'ubuntu-latest'
         name: Download packages - Linux
         run: |
           cd pips
-          if [ -f ../requirements.txt ]; then 
-            cat ../requirements.txt | xargs -n1 -d '\n' pip download --use-feature=2020-resolver ; 
-            pip download --use-feature=2020-resolver -r ../requirements.txt; 
+          if [ -f ../requirements-${{ matrix.version }}.txt ]; then
+            cat ../requirements-${{ matrix.version }}.txt | xargs -n1 -d '\n' pip download --use-feature=2020-resolver ;
+            pip download --use-feature=2020-resolver -r ../requirements-${{ matrix.version }}.txt;
           fi
       - if: matrix.os == 'windows-latest'
         name: Download packages - Windows
         run: |
           cd pips
-          if (Test-Path '../requirements.txt') {
-            cat '../requirements.txt' | %{pip download --use-feature=2020-resolver $_}; 
-            pip download --use-feature=2020-resolver -r '../requirements.txt'; 
+          if (Test-Path '../requirements-${{ matrix.version }}.txt') {
+            cat '../requirements-${{ matrix.version }}.txt' | %{pip download --use-feature=2020-resolver $_};
+            pip download --use-feature=2020-resolver -r '../requirements-${{ matrix.version }}.txt';
           }
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
