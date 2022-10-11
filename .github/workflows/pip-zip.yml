@@ -49,16 +49,16 @@ jobs:
         run: |
           cd pips
           if [ -f ../requirements-${{ matrix.version }}.txt ]; then
-            cat ../requirements-${{ matrix.version }}.txt | xargs -n1 -d '\n' pip download --use-feature=2020-resolver ;
-            pip download --use-feature=2020-resolver -r ../requirements-${{ matrix.version }}.txt;
+            cat ../requirements-${{ matrix.version }}.txt | xargs -n1 -d '\n' pip download ;
+            pip download -r ../requirements-${{ matrix.version }}.txt;
           fi
       - if: matrix.os == 'windows-latest'
         name: Download packages - Windows
         run: |
           cd pips
           if (Test-Path '../requirements-${{ matrix.version }}.txt') {
-            cat '../requirements-${{ matrix.version }}.txt' | %{pip download --use-feature=2020-resolver $_};
-            pip download --use-feature=2020-resolver -r '../requirements-${{ matrix.version }}.txt';
+            cat '../requirements-${{ matrix.version }}.txt' | %{pip download $_};
+            pip download -r '../requirements-${{ matrix.version }}.txt';
           }
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3
