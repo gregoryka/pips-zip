@@ -1,6 +1,7 @@
 pip
 setuptools
 wheel
+setuptools-scm
 pipx < 0.15
 virtualenv
 pipenv
