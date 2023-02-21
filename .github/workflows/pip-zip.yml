@@ -68,6 +68,7 @@ jobs:
 
   DownloadPips-linux-36:
     name: Download Pips for Python 3.6 on RHEL 7
+    needs: ["DownloadPips-linux-27"]
     runs-on: ubuntu-latest
     container:
       image: registry.access.redhat.com/ubi7
@@ -124,6 +125,7 @@ jobs:
 
   DownloadPips-linux-38:
     name: Download Pips for Python 3.8 on RHEL 7
+    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36"]
     runs-on: ubuntu-latest
     container:
       image: registry.access.redhat.com/ubi7
@@ -181,6 +183,7 @@ jobs:
 
   DownloadPips-windows-27:
     name: Download Pips for Python 2.7 on Windows
+    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36", "DownloadPips-linux-38"]
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -243,7 +246,9 @@ jobs:
 
   DownloadPips-Windows:
     name: Download Pips for Python ${{ matrix.version }} on Windows
+    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36", "DownloadPips-linux-38", "DownloadPips-windows-27"]
     strategy:
+      max-parallel: 1
       matrix:
         os: [windows-latest]
         version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
