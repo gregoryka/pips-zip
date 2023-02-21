@@ -32,9 +32,9 @@ jobs:
       - name: Download packages
         run: |
           cd pips
-          if [ -f ../requirements-2.7-rhel7.txt ]; then
-            cat ../requirements-2.7-rhel7.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements-2.7-rhel7.txt;
+          if [ -f ../requirements.txt ]; then
+            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
+            pip download -r ../requirements.txt;
           fi
       - name: Download downloaded
         uses: actions/download-artifact@v3
@@ -89,9 +89,9 @@ jobs:
         run: |
           scl_source rh-python36
           cd pips
-          if [ -f ../requirements-3.6-rhel7.txt ]; then
-            cat ../requirements-3.6-rhel7.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements-3.6-rhel7.txt;
+          if [ -f ../requirements.txt ]; then
+            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
+            pip download -r ../requirements.txt;
           fi
       - name: Download downloaded
         uses: actions/download-artifact@v3
@@ -146,9 +146,9 @@ jobs:
         run: |
           scl_source rh-python38
           cd pips
-          if [ -f ../requirements-3.8-rhel7.txt ]; then
-            cat ../requirements-3.8-rhel7.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements-3.8-rhel7.txt;
+          if [ -f ../requirements.txt ]; then
+            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
+            pip download -r ../requirements.txt;
           fi
       - name: Download downloaded
         uses: actions/download-artifact@v3
@@ -180,10 +180,14 @@ jobs:
           name: downloaded
           path: downloaded.sha512
 
-
   DownloadPips-windows-27:
     name: Download Pips for Python 2.7 on Windows
-    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36", "DownloadPips-linux-38"]
+    needs:
+      [
+        "DownloadPips-linux-27",
+        "DownloadPips-linux-36",
+        "DownloadPips-linux-38",
+      ]
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -204,9 +208,9 @@ jobs:
       - name: Download packages
         run: |
           cd pips
-          if (Test-Path '../requirements-2.7-windows.txt') {
-            cat '../requirements-2.7-windows.txt' | %{pip download $_};
-            pip download -r '../requirements-2.7-windows.txt';
+          if (Test-Path '../requirements.txt') {
+            cat '../requirements.txt' | %{pip download $_};
+            pip download -r '../requirements.txt';
           }
       - name: Download downloaded
         uses: actions/download-artifact@v3
@@ -246,7 +250,13 @@ jobs:
 
   DownloadPips-Windows:
     name: Download Pips for Python ${{ matrix.version }} on Windows
-    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36", "DownloadPips-linux-38", "DownloadPips-windows-27"]
+    needs:
+      [
+        "DownloadPips-linux-27",
+        "DownloadPips-linux-36",
+        "DownloadPips-linux-38",
+        "DownloadPips-windows-27",
+      ]
     strategy:
       max-parallel: 1
       matrix:
@@ -270,9 +280,9 @@ jobs:
       - name: Download packages
         run: |
           cd pips
-          if (Test-Path '../requirements-2.7-windows.txt') {
-            cat '../requirements-2.7-windows.txt' | %{pip download $_};
-            pip download -r '../requirements-2.7-windows.txt';
+          if (Test-Path '../requirements.txt') {
+            cat '../requirements.txt' | %{pip download $_};
+            pip download -r '../requirements.txt';
           }
       - name: Download downloaded
         uses: actions/download-artifact@v3

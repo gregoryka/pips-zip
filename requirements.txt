@@ -1,0 +1,13 @@
+pip
+setuptools
+wheel
+setuptools-scm
+pipx; python_version >= "3.6"
+pipx < 0.15; python_version < "3.6"
+virtualenv
+pipenv
+poetry
+numpy
+scipy
+sympy
+rich; python_version >= "3.6"
