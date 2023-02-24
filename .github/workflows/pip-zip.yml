@@ -9,8 +9,9 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  DownloadPips-linux-27:
-    name: Download Pips for Python 2.7 on RHEL 7
+  DownloadPips-linux:
+    name: Download Pips for RHEL 7
+    concurrency: download_pips
     runs-on: ubuntu-latest
     container:
       image: registry.access.redhat.com/ubi7
@@ -28,19 +29,40 @@ jobs:
           pip --no-python-version-warning config set global.no-python-version-warning true
           pip config set global.use-feature 2020-resolver
           python -m pip install --upgrade pip setuptools wheel setuptools-scm
-          mkdir -p pips
-      - name: Download packages
+          mkdir -p /repo/pips
+      - name: Download packages for python 2.7
         run: |
-          cd pips
-          if [ -f ../requirements.txt ]; then
-            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements.txt;
+          cd /repo
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
+            pip download -d pips -r requirements.txt
           fi
-      - name: Download downloaded
-        uses: actions/download-artifact@v3
+      - name: Download packages for python 3.6
+        run: |
+          yum install -y rh-python36
+          scl enable rh-python36 bash
+          python -m pip install --upgrade pip setuptools wheel
+          cd /repo
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
+            pip download -d pips -r requirements.txt
+          fi
+          exit
+      - name: Download packages for python 3.8
+        run: |
+          yum install -y rh-python38
+          scl enable rh-python38 bash
+          python -m pip install --upgrade pip setuptools wheel
+          cd /repo
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
+            pip download -d pips -r requirements.txt
+          fi
+          exit
+      - name: Restore downloaded
+        uses: actions/cache/restore@v3
         with:
-          # Artifact name
-          name: downloaded
+          key: downloaded
       - name: Check if files already downloaded
         run: |
           touch downloaded.sha512
@@ -56,138 +78,17 @@ jobs:
       - name: Upload pips
         uses: actions/upload-artifact@v3
         with:
-          # A file, directory or wildcard pattern that describes what to upload
           name: pips
           path: pips
-      - name: Upload downloaded
-        uses: actions/upload-artifact@v3
+      - name: Upload downloaded to cache
+        uses: actions/cache/save@v3
         with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: downloaded
-          path: downloaded.sha512
-
-  DownloadPips-linux-36:
-    name: Download Pips for Python 3.6 on RHEL 7
-    needs: ["DownloadPips-linux-27"]
-    runs-on: ubuntu-latest
-    container:
-      image: registry.access.redhat.com/ubi7
-      volumes:
-        - ${{ github.workspace }}:/repo
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Python
-        run: |
-          yum update -y
-          yum install rh-python36 -y
-          scl_source rh-python36
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
-          mkdir -p pips
-      - name: Download packages
-        run: |
-          scl_source rh-python36
-          cd pips
-          if [ -f ../requirements.txt ]; then
-            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements.txt;
-          fi
-      - name: Download downloaded
-        uses: actions/download-artifact@v3
-        with:
-          # Artifact name
-          name: downloaded
-      - name: Check if files already downloaded
-        run: |
-          touch downloaded.sha512
-          cd pips
-          for file in pips/*; do
-            if sha512sum -c --status <(grep "$file" ../downloaded.sha512); then
-              echo "$file already downloaded, removing..."
-              rm "$file"
-            else
-              sha512sum "$file" >> downloaded.sha512
-            fi
-          done
-      - name: Upload pips
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: pips
-          path: pips
-      - name: Upload downloaded
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: downloaded
-          path: downloaded.sha512
-
-  DownloadPips-linux-38:
-    name: Download Pips for Python 3.8 on RHEL 7
-    needs: ["DownloadPips-linux-27", "DownloadPips-linux-36"]
-    runs-on: ubuntu-latest
-    container:
-      image: registry.access.redhat.com/ubi7
-      volumes:
-        - ${{ github.workspace }}:/repo
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Python
-        run: |
-          yum update -y
-          yum install rh-python38 -y
-          scl_source rh-python38
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
-          mkdir -p pips
-      - name: Download packages
-        run: |
-          scl_source rh-python38
-          cd pips
-          if [ -f ../requirements.txt ]; then
-            cat ../requirements.txt | xargs -n1 -d '\n' pip download ;
-            pip download -r ../requirements.txt;
-          fi
-      - name: Download downloaded
-        uses: actions/download-artifact@v3
-        with:
-          # Artifact name
-          name: downloaded
-      - name: Check if files already downloaded
-        run: |
-          touch downloaded.sha512
-          cd pips
-          for file in pips/*; do
-            if sha512sum -c --status <(grep "$file" ../downloaded.sha512); then
-              echo "$file already downloaded, removing..."
-              rm "$file"
-            else
-              sha512sum "$file" >> downloaded.sha512
-            fi
-          done
-      - name: Upload pips
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: pips
-          path: pips
-      - name: Upload downloaded
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: downloaded
+          key: downloaded
           path: downloaded.sha512
 
   DownloadPips-windows-27:
-    name: Download Pips for Python 2.7 on Windows
-    needs:
-      [
-        "DownloadPips-linux-27",
-        "DownloadPips-linux-36",
-        "DownloadPips-linux-38",
-      ]
+    name: Download Pips for Windows
+    concurrency: download_pips
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -196,126 +97,105 @@ jobs:
         uses: actions/setup-python@v4
         with:
           # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
-          python-version: "2.7"
+          python-version: |
+            2.7
+            3.6
+            3.7
+            3.8
+            3.9
+            3.10
+            3.11
           # The target architecture (x86, x64) of the Python or PyPy interpreter.
           architecture: x64
+          cache: "pip"
       - name: Install pip and setup folder
         run: |
           pip --no-python-version-warning config set global.no-python-version-warning true
           pip config set global.use-feature 2020-resolver
           python -m pip install --upgrade pip setuptools wheel setuptools-scm
           mkdir -p pips
-      - name: Download packages
+      - name: Download packages for python 3.11
         run: |
           cd pips
-          if (Test-Path '../requirements.txt') {
-            cat '../requirements.txt' | %{pip download $_};
-            pip download -r '../requirements.txt';
-          }
-      - name: Download downloaded
-        uses: actions/download-artifact@v3
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.11 -m pip download -d pips
+            py -3.11 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 3.10
+        run: |
+          cd pips
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.10 -m pip download -d pips
+            py -3.10 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 3.9
+        run: |
+          cd pips
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.9 -m pip download -d pips
+            py -3.9 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 3.8
+        run: |
+          cd pips
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.8 -m pip download -d pips
+            py -3.8 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 3.7
+        run: |
+          cd pips
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.7 -m pip download -d pips
+            py -3.7 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 3.6
+        run: |
+          cd pips
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -3.6 -m pip download -d pips
+            py -3.6 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Download packages for python 2.7
+        run: |
+          cd pips
+          py -2.7 -m pip --no-python-version-warning config set global.no-python-version-warning true
+          py -2.7 -m pip config set global.use-feature 2020-resolver
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' py -2.7 -m pip download -d pips
+            py -2.7 -m pip download -d pips -r requirements.txt
+          fi
+        shell: bash
+      - name: Restore downloaded
+        uses: actions/cache/restore@v3
         with:
-          # Artifact name
-          name: downloaded
+          key: downloaded
       - name: Check if files already downloaded
         run: |
-          if (!(Test-Path downloaded.sha512)) {
-            New-Item -ItemType File downloaded.sha512 | Out-Null
-          }
-          foreach ($file in Get-ChildItem -Path pips) {
-            $hash = Get-FileHash $file.FullName -Algorithm SHA512 | Select-Object -ExpandProperty Hash
-            Write-Host "Checking file $($file.Name)"
-            if (Select-String -Path downloaded.sha512 -Pattern "^$hash $file.Name") {
-              Write-Host "File $($file.Name) has already been downloaded. Deleting..."
-              Remove-Item -Path $file.FullName -Force
-            }
-            else {
-              Write-Host "File $($file.Name) has not been downloaded yet. Adding to downloaded..."
-              Add-Content -Path downloaded.sha512 -Value "$hash $($file.Name)"
-            }
-          }
-          Get-Content downloaded.sha512 | Sort-Object -Unique { $_.Split()[0] } | Set-Content downloaded.sha512
+          touch downloaded.sha512
+          cd pips
+          for file in pips/*; do
+            if sha512sum -c --status <(grep "$file" ../downloaded.sha512); then
+              echo "$file already downloaded, removing..."
+              rm "$file"
+            else
+              sha512sum "$file" >> ../downloaded.sha512
+            fi
+          done
+        shell: bash
       - name: Upload pips
         uses: actions/upload-artifact@v3
         with:
-          # A file, directory or wildcard pattern that describes what to upload
           name: pips
           path: pips
-      - name: Upload downloaded
-        uses: actions/upload-artifact@v3
+      - name: Upload downloaded to cache
+        uses: actions/cache/save@v3
         with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: downloaded
-          path: downloaded.sha512
-
-  DownloadPips-Windows:
-    name: Download Pips for Python ${{ matrix.version }} on Windows
-    needs:
-      [
-        "DownloadPips-linux-27",
-        "DownloadPips-linux-36",
-        "DownloadPips-linux-38",
-        "DownloadPips-windows-27",
-      ]
-    strategy:
-      max-parallel: 1
-      matrix:
-        os: [windows-latest]
-        version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
-    runs-on: windows-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
-          python-version: ${{ matrix.version }}
-          # The target architecture (x86, x64) of the Python or PyPy interpreter.
-          architecture: x64
-      - name: Install pip and setup folder
-        run: |
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
-          mkdir -p pips
-      - name: Download packages
-        run: |
-          cd pips
-          if (Test-Path '../requirements.txt') {
-            cat '../requirements.txt' | %{pip download $_};
-            pip download -r '../requirements.txt';
-          }
-      - name: Download downloaded
-        uses: actions/download-artifact@v3
-        with:
-          # Artifact name
-          name: downloaded
-      - name: Check if files already downloaded
-        run: |
-          if (!(Test-Path downloaded.sha512)) {
-            New-Item -ItemType File downloaded.sha512 | Out-Null
-          }
-          foreach ($file in Get-ChildItem -Path pips) {
-            $hash = Get-FileHash $file.FullName -Algorithm SHA512 | Select-Object -ExpandProperty Hash
-            Write-Host "Checking file $($file.Name)"
-            if (Select-String -Path downloaded.sha512 -Pattern "^$hash $file.Name") {
-              Write-Host "File $($file.Name) has already been downloaded. Deleting..."
-              Remove-Item -Path $file.FullName -Force
-            }
-            else {
-              Write-Host "File $($file.Name) has not been downloaded yet. Adding to downloaded..."
-              Add-Content -Path downloaded.sha512 -Value "$hash $($file.Name)"
-            }
-          }
-          Get-Content downloaded.sha512 | Sort-Object -Unique { $_.Split()[0] } | Set-Content downloaded.sha512
-      - name: Upload pips
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: pips
-          path: pips
-      - name: Upload downloaded
-        uses: actions/upload-artifact@v3
-        with:
-          # A file, directory or wildcard pattern that describes what to upload
-          name: downloaded
+          key: downloaded
           path: downloaded.sha512
