@@ -66,7 +66,7 @@ jobs:
         run: |
           touch downloaded.sha512
           cd pips
-          for file in pips/*; do
+          for file in ./*; do
             if sha512sum -c --status <(grep "$file" ../downloaded.sha512); then
               echo "$file already downloaded, removing..."
               rm "$file"
@@ -97,8 +97,8 @@ jobs:
         with:
           # Version range or exact version of Python or PyPy to use, using SemVer's version range syntax. Reads from .python-version if unset.
           python-version: |
-            2.7
-            3.6
+            2.7.18
+            3.6.15
             3.7
             3.8
             3.9
@@ -156,6 +156,7 @@ jobs:
         run: |
           py -2.7 -m pip --no-python-version-warning config set global.no-python-version-warning true
           py -2.7 -m pip config set global.use-feature 2020-resolver
+          py -2.7 -m pip install setuptools-scm
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -2.7 -m pip download -d pips
             py -2.7 -m pip download -d pips -r requirements.txt
@@ -170,7 +171,7 @@ jobs:
         run: |
           touch downloaded.sha512
           cd pips
-          for file in pips/*; do
+          for file in ./*; do
             if sha512sum -c --status <(grep "$file" ../downloaded.sha512); then
               echo "$file already downloaded, removing..."
               rm "$file"
