@@ -6,10 +6,8 @@ pipx; python_version >= "3.6"
 pipx < 0.12; python_version < "3.6"
 virtualenv
 pipenv
-poetry; python_version >= "3.6"
---no-binary=msgpack --no-binary=secretstorage --no-binary=functools32 --no-binary=glob2 --no-binary=scandir poetry; python_version < "3.6"
+poetry
 numpy
 scipy
-sympy; python_version >= "3.6"
---no-binary=mpmath sympy; python_version < "3.6"
+sympy
 rich; python_version >= "3.6"
