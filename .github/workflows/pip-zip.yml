@@ -86,7 +86,7 @@ jobs:
           key: downloaded
           path: downloaded.sha512
 
-  DownloadPips-windows-27:
+  DownloadPips-windows:
     name: Download Pips for Windows
     concurrency: download_pips
     runs-on: windows-latest
@@ -110,9 +110,6 @@ jobs:
           cache: "pip"
       - name: Install pip and setup folder
         run: |
-          pip --no-python-version-warning config set global.no-python-version-warning true
-          pip config set global.use-feature 2020-resolver
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
           mkdir -p pips
       - name: Download packages for python 3.11
         run: |
