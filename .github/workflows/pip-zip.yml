@@ -34,29 +34,27 @@ jobs:
         run: |
           cd /repo
           if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
-            pip download -d pips -r requirements.txt
+            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
+            python -m pip download -d pips -r requirements.txt
           fi
       - name: Download packages for python 3.6
         run: |
           yum install -y rh-python36
-          scl enable rh-python36 bash
-          python -m pip install --upgrade pip setuptools wheel
+          scl enable rh-python36 "python -m pip install --upgrade pip setuptools wheel"
           cd /repo
           if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
-            pip download -d pips -r requirements.txt
+            cat requirements.txt | scl enable rh-python36 "xargs -n1 -d '\n' python -m pip download -d pips "
+            scl enable rh-python36 "python -m pip download -d pips -r requirements.txt"
           fi
           exit
       - name: Download packages for python 3.8
         run: |
           yum install -y rh-python38
-          scl enable rh-python38 bash
-          python -m pip install --upgrade pip setuptools wheel
+          scl enable rh-python38 "python -m pip install --upgrade pip setuptools wheel"
           cd /repo
           if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
-            pip download -d pips -r requirements.txt
+            cat requirements.txt | scl enable rh-python38 "xargs -n1 -d '\n' python -m pip download -d pips "
+            scl enable rh-python38 "python -m pip download -d pips -r requirements.txt"
           fi
           exit
       - name: Restore downloaded
