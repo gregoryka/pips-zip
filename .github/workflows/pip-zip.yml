@@ -26,17 +26,7 @@ jobs:
           yum update -y
           curl https://bootstrap.pypa.io/pip/2.7/get-pip.py > get-pip.py
           python get-pip.py
-          pip --no-python-version-warning config set global.no-python-version-warning true
-          pip config set global.use-feature 2020-resolver
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
           mkdir -p /repo/pips
-      - name: Download packages for python 2.7
-        run: |
-          cd /repo
-          if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
-            python -m pip download -d pips -r requirements.txt
-          fi
       - name: Download packages for python 3.6
         run: |
           yum install -y rh-python36
@@ -57,6 +47,16 @@ jobs:
             scl enable rh-python38 "python -m pip download -d pips -r requirements.txt"
           fi
           exit
+      - name: Download packages for python 2.7
+        run: |
+          cd /repo
+          pip --no-python-version-warning config set global.no-python-version-warning true
+          pip config set global.use-feature 2020-resolver
+          python -m pip install --upgrade pip setuptools wheel setuptools-scm
+          if [ -f requirements.txt ]; then
+            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
+            python -m pip download -d pips -r requirements.txt
+          fi
       - name: Restore downloaded
         uses: actions/cache/restore@v3
         with:
