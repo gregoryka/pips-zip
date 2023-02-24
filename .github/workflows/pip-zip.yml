@@ -44,7 +44,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           cd /repo
           if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
+            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
             pip download -d pips -r requirements.txt
           fi
           exit
@@ -55,7 +55,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           cd /repo
           if [ -f requirements.txt ]; then
-            cat requirements.txt | xargs -n1 -d '\n' pip download -d pips
+            cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
             pip download -d pips -r requirements.txt
           fi
           exit
@@ -63,6 +63,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           key: downloaded
+          path: ${{ github.workspace }}
       - name: Check if files already downloaded
         run: |
           touch downloaded.sha512
@@ -113,7 +114,6 @@ jobs:
           mkdir -p pips
       - name: Download packages for python 3.11
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.11 -m pip download -d pips
             py -3.11 -m pip download -d pips -r requirements.txt
@@ -121,7 +121,6 @@ jobs:
         shell: bash
       - name: Download packages for python 3.10
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.10 -m pip download -d pips
             py -3.10 -m pip download -d pips -r requirements.txt
@@ -129,7 +128,6 @@ jobs:
         shell: bash
       - name: Download packages for python 3.9
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.9 -m pip download -d pips
             py -3.9 -m pip download -d pips -r requirements.txt
@@ -137,7 +135,6 @@ jobs:
         shell: bash
       - name: Download packages for python 3.8
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.8 -m pip download -d pips
             py -3.8 -m pip download -d pips -r requirements.txt
@@ -145,7 +142,6 @@ jobs:
         shell: bash
       - name: Download packages for python 3.7
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.7 -m pip download -d pips
             py -3.7 -m pip download -d pips -r requirements.txt
@@ -153,7 +149,6 @@ jobs:
         shell: bash
       - name: Download packages for python 3.6
         run: |
-          cd pips
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -3.6 -m pip download -d pips
             py -3.6 -m pip download -d pips -r requirements.txt
@@ -161,7 +156,6 @@ jobs:
         shell: bash
       - name: Download packages for python 2.7
         run: |
-          cd pips
           py -2.7 -m pip --no-python-version-warning config set global.no-python-version-warning true
           py -2.7 -m pip config set global.use-feature 2020-resolver
           if [ -f requirements.txt ]; then
@@ -173,6 +167,7 @@ jobs:
         uses: actions/cache/restore@v3
         with:
           key: downloaded
+          path: ${{ github.workspace }}
       - name: Check if files already downloaded
         run: |
           touch downloaded.sha512
