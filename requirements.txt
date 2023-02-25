@@ -1,8 +1,8 @@
 add-trailing-comma
 algorithms
-ansible; python_version >= "3.7"
 ansible-core; python_version != "3.6"
 ansible-lint
+ansible; python_version >= "3.7"
 ansible<2.10; python_version != "3.6"
 arrow
 asv
@@ -20,8 +20,8 @@ Bottleneck
 bowler
 brotli
 cache-pandas; python_version >= "3.7"
-cachetools
 cache3
+cachetools
 callgraph
 cffi
 cmake
@@ -103,7 +103,6 @@ flake8-import-style
 flake8-isort
 flake8-jira-todo-checker
 flake8-json
-pyupgrade
 flake8-length
 flake8-literal
 flake8-logging-format
@@ -169,6 +168,7 @@ flakeheaven
 flakehell
 flit
 future
+graphviz
 hacking
 html5lib
 humanize
@@ -237,9 +237,6 @@ pipx; python_version >= "3.6"
 plotly
 poetry
 polyaxon
-sip
-sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.zip; sys_platform == "win32"
-sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
 pooch
 projectq
 prospector
@@ -253,6 +250,7 @@ pyarrow
 PyAutoGUI
 pycallgraph; python_version < "3"
 pycallgraph2
+pycc
 pycodestyle
 pycrypto
 pycryptodome
@@ -278,7 +276,6 @@ pyre-check
 pyreadstat
 pyringe; python_version < "3"
 pyshark
-tables
 pytest
 pytest-clarity
 pytest-cov
@@ -292,6 +289,7 @@ python-snappy
 pytime
 pytype
 pytz
+pyupgrade
 pywin32; sys_platform == 'win32'
 pyxlsb
 PyYAML
@@ -299,6 +297,7 @@ pyzstd
 qiskit
 qtconsole
 qtpy
+r2pipe
 requests
 requests-html
 rich
@@ -318,17 +317,16 @@ scipy
 seaborn[stats]
 selenium
 setuptools
-pycc
 setuptools-scm
 sh
-typeguard
+sip
+sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
+sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.zip; sys_platform == "win32"
 six
 snakefood; python_version < "3"
 sortedcontainers
-graphviz
 sparse; python_version < "3.11"
 sphinx
-r2pipe
 sphinx_rtd_theme
 sphinx-gallery
 sphinx-lint; python_version >= "3.7"
@@ -338,12 +336,13 @@ SQLAlchemy
 statsmodels
 subprocess32
 sympy
+tables
 tabulate
 tbb
 tbb-devel
-tbb4py
-tbb<2021.6
 tbb-devel<2021.6
+tbb<2021.6
+tbb4py
 tbb4py<2021.6
 tensorflow
 texttable
@@ -356,6 +355,7 @@ transitions
 tryceratops
 tweepy
 twine
+typeguard
 types-requests
 tzdata
 uncompyle6
