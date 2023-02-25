@@ -245,8 +245,7 @@ psutil
 psycopg2-binary
 pudb
 py-spy
-pyamg; python_version >= "3.7"
-pyamg<="4.2.0"; python_version < "3.7"
+pyamg
 pyannotate
 pyarrow
 PyAutoGUI
@@ -273,8 +272,7 @@ PyQt5
 PyQt6; sys_platform == 'win32'
 pyqtgraph
 pyre-check
-pyreadstat; python_version > "3.6"
-pyreadstat<"1.1.4"; python_version < "3.7"
+pyreadstat
 pyringe; python_version < "3"
 pyshark
 pytest
@@ -294,8 +292,7 @@ pyupgrade
 pywin32; sys_platform == 'win32'
 pyxlsb
 PyYAML
-pyzstd; python_version > "3.6"
-pyzstd<"0.15.4"; python_version < "3.7"
+pyzstd
 qiskit
 qtconsole
 qtpy
