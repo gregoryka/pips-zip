@@ -24,12 +24,12 @@ jobs:
       - name: Setup Python
         run: |
           yum update -y
+          yum install -y openssl-devel rh-python36 rh-python38
           curl https://bootstrap.pypa.io/pip/2.7/get-pip.py > get-pip.py
           python get-pip.py
           mkdir -p /repo/pips
       - name: Download packages for python 3.6
         run: |
-          yum install -y rh-python36
           scl enable rh-python36 "python -m pip install --upgrade pip setuptools wheel"
           cd /repo
           if [ -f requirements.txt ]; then
@@ -39,7 +39,6 @@ jobs:
           exit
       - name: Download packages for python 3.8
         run: |
-          yum install -y rh-python38
           scl enable rh-python38 "python -m pip install --upgrade pip setuptools wheel"
           cd /repo
           if [ -f requirements.txt ]; then

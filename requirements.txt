@@ -1,9 +1,9 @@
 add-trailing-comma
 algorithms
-ansible
-ansible-core
+ansible; python_version >= "3.7"
+ansible-core; python_version != "3.6"
 ansible-lint
-ansible<2.9
+ansible<2.10; python_version != "3.6"
 arrow
 asv
 attrs
@@ -15,24 +15,22 @@ bellybutton
 bidict
 black
 blosc
-borgbackup
+borgbackup; sys_platform == 'linux' or sys_platform == 'linux2'
 Bottleneck
 bowler
 brotli
-cache-pandas
+cache-pandas; python_version >= "3.7"
 cachetools
+cache3
 callgraph
 cffi
 cmake
 coala-bears
 code2flow
 cohesion
+colorama
 configparser
 coverage
-cppyy
-cppyy-backend
-cppyy-cling
-CPyCppyy
 cryptography
 cython
 darglint
@@ -52,21 +50,21 @@ flake8
 flake8-2020
 flake8-aaa
 flake8-absolute-import
-flake8-ado
+flake8-ado; python_version >= "3.7"
 flake8-alfred
 flake8-alphabetize
 flake8-annotations
 flake8-annotations-complexity
 flake8-annotations-coverage
 flake8-assertive
-flake8-async
+flake8-async; python_version >= "3.7"
 flake8-author
 flake8-bandit
 flake8-black
 flake8-broken-line
 flake8-bugbear
 flake8-builtins
-flake8-class-attributes-order
+flake8-class-attributes-order; python_version >= "3.7"
 flake8-codes
 flake8-coding
 flake8-cognitive-complexity
@@ -75,26 +73,26 @@ flake8-comments
 flake8-comprehensions
 flake8-copyright
 flake8-dashboard
-flake8-datetime-import
+flake8-datetime-import; python_version >= "3.7"
 flake8-datetime-utcnow-plugin
 flake8-datetimez
 flake8-debugger
 flake8-django
 flake8-django-migrations
-flake8-docstring-checker
+flake8-docstring-checker; python_version >= "3.7"
 flake8-docstrings
 flake8-dunder-all
 flake8-encodings
 flake8-eradicate
 flake8-executable
 flake8-expression-complexity
-flake8-fastapi
+flake8-fastapi; python_version >= "3.8"
 flake8-fixme
 flake8-for-pycharm
-flake8-forbidden-func
+flake8-forbidden-func; python_version >= "3.7"
 flake8-functions
-flake8-functions-names
-flake8-future-annotations
+flake8-functions-names; python_version >= "3.7"
+flake8-future-annotations; python_version >= "3.7"
 flake8-future-import
 flake8-gl-codeclimate
 flake8-html
@@ -105,32 +103,33 @@ flake8-import-style
 flake8-isort
 flake8-jira-todo-checker
 flake8-json
+pyupgrade
 flake8-length
 flake8-literal
 flake8-logging-format
 flake8-markdown
-flake8-match
+flake8-match; python_version >= "3.10"
 flake8-mock
 flake8-multiline-containers
 flake8-nb
-flake8-new-union-types
+flake8-new-union-types; python_version >= "3.8"
 flake8-newspaper-style
 flake8-no-implicit-concat
 flake8-no-pep420
 flake8-no-types
 flake8-noqa
-flake8-obey-import-goat
+flake8-obey-import-goat; python_version >= "3.9"
 flake8-ownership
 flake8-pep3101
-flake8-pep585
-flake8-pep604
+flake8-pep585; python_version >= "3.7"
+flake8-pep604; python_version >= "3.7"
 flake8-pie
 flake8-print
 flake8-printf-formatting
 flake8-pyi
 flake8-pylint
 flake8-pyproject
-flake8-pyprojecttoml
+flake8-pyprojecttoml; python_version >= "3.7"
 flake8-pytest
 flake8-pytest-style
 flake8-pytestrail
@@ -157,18 +156,17 @@ flake8-tidy-imports
 flake8-todo
 flake8-todos
 flake8-too-many
-flake8-type-checking
+flake8-type-checking; python_version >= "3.7"
 flake8-typing-imports
 flake8-unused-arguments
 flake8-use-fstring
 flake8-use-pathlib
-flake8-useless-assert
+flake8-useless-assert; python_version >= "3.7"
 flake8-variables-names
-flake8-walrus
+flake8-walrus; python_version >= "3.8"
 flake8-warnings
 flakeheaven
 flakehell
-flakes
 flit
 future
 hacking
@@ -176,9 +174,10 @@ html5lib
 humanize
 hunter
 hypothesis
+icc-rt
 icecream
 import-linter
-infer-types
+infer-types; python_version >= "3.7"
 ipdb
 ipykernel
 ipyleaflet
@@ -215,7 +214,7 @@ nose
 nose2
 notebook
 nox
-numba
+numba; python_version < "3.11"
 numexpr
 numpy
 numpydoc
@@ -228,6 +227,7 @@ pdb-attach
 pdbpp
 pendulum
 pep8-naming
+pickle5; python_version < "3.8"
 pillow
 Pillow
 pip
@@ -237,6 +237,9 @@ pipx; python_version >= "3.6"
 plotly
 poetry
 polyaxon
+sip
+sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.zip; sys_platform == "win32"
+sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
 pooch
 projectq
 prospector
@@ -248,7 +251,7 @@ pyamg
 pyannotate
 pyarrow
 PyAutoGUI
-pycallgraph
+pycallgraph; python_version < "3"
 pycallgraph2
 pycodestyle
 pycrypto
@@ -257,6 +260,7 @@ pycryptodomex
 pydocstyle
 pyflakes
 pyformat
+pygments
 pygraphviz
 pylama
 pylint
@@ -265,15 +269,16 @@ pynacl
 pynput
 pypattyrn
 pyperf
-PyQt4
+PyQt4 @ https://www.riverbankcomputing.com/static/Downloads/PyQt4/4.12.3/PyQt4_gpl_win-4.12.3.zip; sys_platform == "win32"
+PyQt4 @ https://www.riverbankcomputing.com/static/Downloads/PyQt4/4.12.3/PyQt4_gpl_x11-4.12.3.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
 PyQt5
 PyQt6
 pyqtgraph
 pyre-check
 pyreadstat
-pyringe
+pyringe; python_version < "3"
 pyshark
-PyTables
+tables
 pytest
 pytest-clarity
 pytest-cov
@@ -299,7 +304,7 @@ requests-html
 rich
 rich; python_version >= "3.6"
 rope
-ruff
+ruff; python_version >= "3.7"
 sarge
 scapy
 schema
@@ -313,15 +318,20 @@ scipy
 seaborn[stats]
 selenium
 setuptools
+pycc
 setuptools-scm
 sh
+typeguard
 six
-snakefood
+snakefood; python_version < "3"
 sortedcontainers
-sparse
+graphviz
+sparse; python_version < "3.11"
 sphinx
+r2pipe
+sphinx_rtd_theme
 sphinx-gallery
-sphinx-lint
+sphinx-lint; python_version >= "3.7"
 sphinx-prompt
 sphinxext-opengraph
 SQLAlchemy
@@ -329,6 +339,12 @@ statsmodels
 subprocess32
 sympy
 tabulate
+tbb
+tbb-devel
+tbb4py
+tbb<2021.6
+tbb-devel<2021.6
+tbb4py<2021.6
 tensorflow
 texttable
 tkcalendar
@@ -353,19 +369,15 @@ wdb.server
 weightedcalcs
 wemake-python-styleguide
 wheel
-wps-playground
 xarray
-xclip
 xgboost
 xlrd
 xlsxwriter
 xlwt
 xrft
-xsel
 yapf
-ydata-profiling[notebook,unicode,pyspark]
+ydata-profiling[notebook,unicode,pyspark]; python_version >= "3.7" and python_version < "3.11"
 yesqa
 yulewalker
-zlib
 zstandard
 zstd
