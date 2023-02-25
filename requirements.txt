@@ -8,24 +8,24 @@ arrow
 asv
 attrs
 autopep8
-autotyping
+autotyping; python_version >= "3.6"
 bandit
 beautifulsoup4
 bellybutton
 bidict
-black
+black; python_version >= "3.6"
 blosc
-borgbackup; sys_platform == 'linux' or sys_platform == 'linux2'
+borgbackup; (sys_platform == 'linux' or sys_platform == 'linux2') and python_version >= "3.6"
 Bottleneck
 bowler
 brotli
 cache-pandas; python_version >= "3.7"
-cache3
+cache3; python_version >= "3.6"
 cachetools
-callgraph
+callgraph; python_version >= "3.6"
 cffi
 cmake
-coala-bears
+coala-bears; python_version >= "3.6"
 code2flow
 cohesion
 colorama
@@ -33,13 +33,13 @@ configparser
 coverage
 cryptography
 cython
-darglint
-data-cache
+darglint; python_version >= "3.6"
+data-cache; python_version >= "3.6"
 debugpy
 decompyle3
 delegator.py
 dlint
-docutils-stubs
+docutils-stubs; python_version >= "3.6"
 dotted
 enum34
 fake_useragent
@@ -47,126 +47,126 @@ fastcluster
 fastparquet
 fissix
 flake8
-flake8-2020
+flake8-2020; python_version >= "3.6"
 flake8-aaa
-flake8-absolute-import
+flake8-absolute-import; python_version >= "3.6"
 flake8-ado; python_version >= "3.7"
-flake8-alfred
-flake8-alphabetize
-flake8-annotations
-flake8-annotations-complexity
-flake8-annotations-coverage
+flake8-alfred; python_version >= "3.6"
+flake8-alphabetize; python_version >= "3.6"
+flake8-annotations-complexity; python_version >= "3.6"
+flake8-annotations-coverage; python_version >= "3.6"
+flake8-annotations; python_version >= "3.6"
 flake8-assertive
 flake8-async; python_version >= "3.7"
 flake8-author
 flake8-bandit
-flake8-black
-flake8-broken-line
-flake8-bugbear
+flake8-black; python_version >= "3.6"
+flake8-broken-line; python_version >= "3.6"
+flake8-bugbear; python_version >= "3.6"
 flake8-builtins
 flake8-class-attributes-order; python_version >= "3.7"
-flake8-codes
+flake8-codes; python_version >= "3.6"
 flake8-coding
-flake8-cognitive-complexity
+flake8-cognitive-complexity; python_version >= "3.6"
 flake8-commas
-flake8-comments
+flake8-comments; python_version >= "3.6"
 flake8-comprehensions
 flake8-copyright
-flake8-dashboard
+flake8-dashboard; python_version >= "3.6"
 flake8-datetime-import; python_version >= "3.7"
 flake8-datetime-utcnow-plugin
-flake8-datetimez
+flake8-datetimez; python_version >= "3.6"
 flake8-debugger
 flake8-django
-flake8-django-migrations
+flake8-django-migrations; python_version >= "3.6"
 flake8-docstring-checker; python_version >= "3.7"
 flake8-docstrings
-flake8-dunder-all
-flake8-encodings
-flake8-eradicate
-flake8-executable
-flake8-expression-complexity
+flake8-dunder-all; python_version >= "3.6"
+flake8-encodings; python_version >= "3.6"
+flake8-eradicate; python_version >= "3.6"
+flake8-executable; python_version >= "3.6"
+flake8-expression-complexity; python_version >= "3.6"
 flake8-fastapi; python_version >= "3.8"
 flake8-fixme
-flake8-for-pycharm
+flake8-for-pycharm; python_version >= "3.6"
 flake8-forbidden-func; python_version >= "3.7"
-flake8-functions
 flake8-functions-names; python_version >= "3.7"
+flake8-functions; python_version >= "3.6"
 flake8-future-annotations; python_version >= "3.7"
 flake8-future-import
 flake8-gl-codeclimate
 flake8-html
-flake8-implicit-str-concat
+flake8-implicit-str-concat; python_version >= "3.6"
 flake8-import-order
 flake8-import-order-spoqa
 flake8-import-style
 flake8-isort
-flake8-jira-todo-checker
+flake8-jira-todo-checker; python_version >= "3.6"
 flake8-json
-flake8-length
-flake8-literal
+flake8-length; python_version >= "3.6"
+flake8-literal; python_version >= "3.6"
 flake8-logging-format
-flake8-markdown
+flake8-markdown; python_version >= "3.6"
 flake8-match; python_version >= "3.10"
 flake8-mock
 flake8-multiline-containers
-flake8-nb
+flake8-nb; python_version >= "3.6"
 flake8-new-union-types; python_version >= "3.8"
 flake8-newspaper-style
 flake8-no-implicit-concat
-flake8-no-pep420
-flake8-no-types
-flake8-noqa
+flake8-no-pep420; python_version >= "3.6"
+flake8-no-types; python_version >= "3.6"
+flake8-noqa; python_version >= "3.6"
 flake8-obey-import-goat; python_version >= "3.9"
 flake8-ownership
 flake8-pep3101
 flake8-pep585; python_version >= "3.7"
 flake8-pep604; python_version >= "3.7"
-flake8-pie
+flake8-pie; python_version >= "3.6"
 flake8-print
-flake8-printf-formatting
-flake8-pyi
-flake8-pylint
-flake8-pyproject
+flake8-printf-formatting; python_version >= "3.6"
+flake8-pyi; python_version >= "3.6"
+flake8-pylint; python_version >= "3.6"
+flake8-pyproject; python_version >= "3.6"
 flake8-pyprojecttoml; python_version >= "3.7"
 flake8-pytest
-flake8-pytest-style
-flake8-pytestrail
+flake8-pytest-style; python_version >= "3.6"
+flake8-pytestrail; python_version >= "3.6"
 flake8-quotes
 flake8-requirements
-flake8-return
+flake8-return; python_version >= "3.6"
 flake8-rst
 flake8-rst-docstrings
-flake8-ruler
+flake8-ruler; python_version >= "3.6"
 flake8-scrapy
-flake8-scream
-flake8-secure-coding-standard
-flake8-simplify
-flake8-slots
+flake8-scream; python_version >= "3.6"
+flake8-secure-coding-standard; python_version >= "3.6"
+flake8-simplify; python_version >= "3.6"
+flake8-slots; python_version >= "3.6"
 flake8-spellcheck
-flake8-sphinx-links
+flake8-sphinx-links; python_version >= "3.6"
 flake8-sql
 flake8-SQL
-flake8-strftime
+flake8-strftime; python_version >= "3.6"
 flake8-strict
 flake8-string-format
 flake8-test-name
 flake8-tidy-imports
 flake8-todo
-flake8-todos
-flake8-too-many
+flake8-todos; python_version >= "3.6"
+flake8-too-many; python_version >= "3.6"
 flake8-type-checking; python_version >= "3.7"
-flake8-typing-imports
+flake8-typing-imports; python_version >= "3.6"
 flake8-unused-arguments
-flake8-use-fstring
-flake8-use-pathlib
+flake8-use-fstring; python_version >= "3.6"
+flake8-use-pathlib; python_version >= "3.6"
 flake8-useless-assert; python_version >= "3.7"
-flake8-variables-names
+flake8-variables-names; python_version >= "3.6"
 flake8-walrus; python_version >= "3.8"
-flake8-warnings
-flakeheaven
-flakehell
-flit
+flake8-warnings; python_version >= "3.6"
+flakeheaven; python_version >= "3.6"
+flakehell; python_version >= "3.6"
+flit; python_version >= "3.6"
 future
 graphviz
 hacking
@@ -189,9 +189,9 @@ jupyter
 jupyter-c-kernel
 jupyter-console
 jupyter-repo2docker
-jupyterhub
+jupyterhub; python_version >= "3.6"
 jupyterlab
-jupyterlab-flake8
+jupyterlab-flake8; python_version >= "3.6"
 keras
 keyboard
 line_profiler[all]
@@ -205,12 +205,12 @@ maturin
 mccabe
 memory-profiler
 modernize
-MonkeyType
+MonkeyType; python_version >= "3.6"
 mouse
 mypy
 nbconvert
-nbqa[toolchain]
-nitpick
+nbqa[toolchain]; python_version >= "3.6"
+nitpick; python_version >= "3.6"
 nose
 nose2
 notebook
@@ -224,6 +224,7 @@ openpyxl
 pandas
 pandas-vet
 paramiko
+pathlib2
 pdb-attach
 pdbpp
 pendulum
@@ -268,15 +269,15 @@ pynacl
 pynput
 pypattyrn
 pyperf
-PyQt5
+PyQt5; python_version >= "3.6"
 PyQt6; sys_platform == 'win32'
 pyqtgraph
-pyre-check
+pyre-check; python_version >= "3.6"
 pyreadstat
 pyringe; python_version < "3"
 pyshark
 pytest
-pytest-clarity
+pytest-clarity; python_version >= "3.6"
 pytest-cov
 pytest-flake8
 pytest-xdist
@@ -292,14 +293,13 @@ pyupgrade
 pywin32; sys_platform == 'win32'
 pyxlsb
 PyYAML
-pyzstd
-qiskit
+pyzstd; python_version >= "3.6"
+qiskit; python_version >= "3.6"
 qtconsole
 qtpy
 r2pipe
 requests
 requests-html
-rich
 rich; python_version >= "3.6"
 rope
 ruff; python_version >= "3.7"
@@ -317,8 +317,8 @@ seaborn[stats]
 selenium
 setuptools
 setuptools-scm
-sh
-sip
+sh; sys_platform == 'linux' or sys_platform == 'linux2'
+sip; python_version >= "3.6"
 six
 snakefood; python_version < "3"
 sortedcontainers
@@ -328,7 +328,7 @@ sphinx_rtd_theme
 sphinx-gallery
 sphinx-lint; python_version >= "3.7"
 sphinx-prompt
-sphinxext-opengraph
+sphinxext-opengraph; python_version >= "3.6"
 SQLAlchemy
 statsmodels
 subprocess32
@@ -344,8 +344,8 @@ tbb4py<2021.6
 tensorflow
 texttable
 tkcalendar
-tomli
-tomli-w
+tomli-w; python_version >= "3.6"
+tomli; python_version >= "3.6"
 tox
 traceml
 transitions
@@ -360,7 +360,7 @@ virtualenv
 voila
 vprof
 vulture
-ward
+ward; python_version >= "3.6"
 wdb
 wdb.server
 weightedcalcs
@@ -375,6 +375,6 @@ xrft
 yapf
 ydata-profiling[notebook,unicode,pyspark]; python_version >= "3.7" and python_version < "3.11"
 yesqa
-yulewalker
+yulewalker; python_version >= "3.6"
 zstandard
 zstd

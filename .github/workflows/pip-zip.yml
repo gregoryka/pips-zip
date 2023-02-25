@@ -49,7 +49,7 @@ jobs:
           cd /repo
           pip --no-python-version-warning config set global.no-python-version-warning true
           pip config set global.use-feature 2020-resolver
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm cython numpy pybind11
+          python -m pip install --upgrade pip setuptools wheel setuptools-scm cython numpy pybind11 pathlib2
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
           fi
@@ -146,7 +146,7 @@ jobs:
         run: |
           py -2.7 -m pip --no-python-version-warning config set global.no-python-version-warning true
           py -2.7 -m pip config set global.use-feature 2020-resolver
-          py -2.7 -m pip install setuptools-scm
+          py -2.7 -m pip install setuptools-scm pathlib2
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -2.7 -m pip download -d pips
           fi
