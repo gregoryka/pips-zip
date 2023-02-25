@@ -201,6 +201,7 @@ mamba
 manhole
 matlab_kernel
 matplotlib
+maturin
 mccabe
 memory-profiler
 modernize
@@ -241,10 +242,11 @@ pooch
 projectq
 prospector
 psutil
-psycopg2
+psycopg2-binary
 pudb
 py-spy
-pyamg
+pyamg; python_version >= "3.7"
+pyamg<="4.2.0"; python_version < "3.7"
 pyannotate
 pyarrow
 PyAutoGUI
@@ -267,13 +269,12 @@ pynacl
 pynput
 pypattyrn
 pyperf
-PyQt4 @ https://www.riverbankcomputing.com/static/Downloads/PyQt4/4.12.3/PyQt4_gpl_win-4.12.3.zip; sys_platform == "win32"
-PyQt4 @ https://www.riverbankcomputing.com/static/Downloads/PyQt4/4.12.3/PyQt4_gpl_x11-4.12.3.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
 PyQt5
-PyQt6
+PyQt6; sys_platform == 'win32'
 pyqtgraph
 pyre-check
-pyreadstat
+pyreadstat; python_version > "3.6"
+pyreadstat<"1.1.4"; python_version < "3.7"
 pyringe; python_version < "3"
 pyshark
 pytest
@@ -293,7 +294,8 @@ pyupgrade
 pywin32; sys_platform == 'win32'
 pyxlsb
 PyYAML
-pyzstd
+pyzstd; python_version > "3.6"
+pyzstd<"0.15.4"; python_version < "3.7"
 qiskit
 qtconsole
 qtpy
@@ -320,8 +322,6 @@ setuptools
 setuptools-scm
 sh
 sip
-sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.tar.gz; sys_platform == "linux" or sys_platform == "linux2"
-sip @ https://www.riverbankcomputing.com/static/Downloads/sip/4.19.25/sip-4.19.25.zip; sys_platform == "win32"
 six
 snakefood; python_version < "3"
 sortedcontainers

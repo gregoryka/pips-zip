@@ -30,7 +30,7 @@ jobs:
           mkdir -p /repo/pips
       - name: Download packages for python 3.6
         run: |
-          scl enable rh-python36 "python -m pip install --upgrade pip setuptools wheel"
+          scl enable rh-python36 "python -m pip install --upgrade pip setuptools wheel cython"
           cd /repo
           if [ -f requirements.txt ]; then
             cat requirements.txt | scl enable rh-python36 "xargs -n1 -d '\n' python -m pip download -d pips "
@@ -39,7 +39,7 @@ jobs:
           exit
       - name: Download packages for python 3.8
         run: |
-          scl enable rh-python38 "python -m pip install --upgrade pip setuptools wheel"
+          scl enable rh-python38 "python -m pip install --upgrade pip setuptools wheel cython"
           cd /repo
           if [ -f requirements.txt ]; then
             cat requirements.txt | scl enable rh-python38 "xargs -n1 -d '\n' python -m pip download -d pips "
@@ -51,7 +51,7 @@ jobs:
           cd /repo
           pip --no-python-version-warning config set global.no-python-version-warning true
           pip config set global.use-feature 2020-resolver
-          python -m pip install --upgrade pip setuptools wheel setuptools-scm
+          python -m pip install --upgrade pip setuptools wheel setuptools-scm cython numpy pybind11
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' python -m pip download -d pips
             python -m pip download -d pips -r requirements.txt
