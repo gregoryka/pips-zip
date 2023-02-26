@@ -1,9 +1,9 @@
 add-trailing-comma
 algorithms
-ansible-core; python_version != "3.6"
-ansible-lint
+ansible-core; (sys_platform == 'linux' or sys_platform == 'linux2') and python_version != "3.6"
+ansible-lint; sys_platform == 'linux' or sys_platform == 'linux2'
 ansible; python_version >= "3.7"
-ansible<2.10; python_version != "3.6"
+ansible<2.10; (sys_platform == 'linux' or sys_platform == 'linux2') and python_version != "3.6"
 arrow
 asv
 attrs
@@ -26,7 +26,7 @@ callgraph; python_version >= "3.6"
 cffi
 cmake
 coala-bears; python_version >= "3.6"
-code2flow
+code2flow; python_version >= "3.6"
 cohesion
 colorama
 configparser
@@ -74,7 +74,7 @@ flake8-comprehensions
 flake8-copyright
 flake8-dashboard; python_version >= "3.6"
 flake8-datetime-import; python_version >= "3.7"
-flake8-datetime-utcnow-plugin
+flake8-datetime-utcnow-plugin; python_version >= "3.6"
 flake8-datetimez; python_version >= "3.6"
 flake8-debugger
 flake8-django
@@ -224,6 +224,7 @@ openpyxl
 pandas
 pandas-vet
 paramiko
+pathlib
 pathlib2
 pdb-attach
 pdbpp
@@ -241,6 +242,7 @@ poetry
 polyaxon
 pooch
 projectq
+prompt_toolkit
 prospector
 psutil
 psycopg2-binary
@@ -250,6 +252,7 @@ pyamg
 pyannotate
 pyarrow
 PyAutoGUI
+pybind11
 pycallgraph; python_version < "3"
 pycallgraph2
 pycc
@@ -270,16 +273,17 @@ pynput
 pypattyrn
 pyperf
 PyQt5; python_version >= "3.6"
-PyQt6; sys_platform == 'win32'
+PyQt6; sys_platform == 'win32' and python_version >= "3.6"
 pyqtgraph
 pyre-check; python_version >= "3.6"
 pyreadstat
-pyringe; python_version < "3"
+pyringe; python_version < "3" and sys_platform == 'linux2'
 pyshark
 pytest
 pytest-clarity; python_version >= "3.6"
 pytest-cov
 pytest-flake8
+pytest-runner
 pytest-xdist
 python-box[all]
 python-coveralls
@@ -336,12 +340,12 @@ sympy
 tables
 tabulate
 tbb
-tbb-devel
-tbb-devel<2021.6
+tbb-devel; python_version >= "3.6" or sys_platform == 'linux' or sys_platform == 'linux2'
+tbb-devel<2021.6; python_version >= "3.6" or sys_platform == 'linux' or sys_platform == 'linux2'
 tbb<2021.6
 tbb4py
 tbb4py<2021.6
-tensorflow
+tensorflow; python_version >= "3.6" or sys_platform == 'linux' or sys_platform == 'linux2'
 texttable
 tkcalendar
 tomli-w; python_version >= "3.6"

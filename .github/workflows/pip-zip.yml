@@ -146,7 +146,7 @@ jobs:
         run: |
           py -2.7 -m pip --no-python-version-warning config set global.no-python-version-warning true
           py -2.7 -m pip config set global.use-feature 2020-resolver
-          py -2.7 -m pip install setuptools-scm pathlib2
+          py -2.7 -m pip install setuptools-scm pathlib2 pytest-runner cython numpy pybind11
           if [ -f requirements.txt ]; then
             cat requirements.txt | xargs -n1 -d '\n' py -2.7 -m pip download -d pips
           fi
